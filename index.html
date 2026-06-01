@@ -707,7 +707,7 @@ function buildCard(ad, idx) {
     if (first && last && first !== last) {
       dateHtml = `<span class="region-dates">${first} – ${last}</span>`;
     } else if (last) {
-      dateHtml = `<span class="region-dates"><span class="one-day">${last}</span></span>`;
+      dateHtml = `<span class="region-dates">${last}</span>`;
     } else {
       dateHtml = `<span class="region-dates">—</span>`;
     }
@@ -817,6 +817,7 @@ async function init() {
     const res = await fetch(DATA_URL);
     allAds = await res.json();
     if (!Array.isArray(allAds)) allAds = [allAds];
+    allAds.sort((a, b) => (b.first_shown || 0) - (a.first_shown || 0));
     populateFilters();
     buildStatBar();
     filtered = [...allAds];
